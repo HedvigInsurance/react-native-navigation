@@ -22,6 +22,10 @@
 +(void)bootstrap:(NSURL *)jsCodeLocation launchOptions:(NSDictionary *)launchOptions bridgeManagerDelegate:(id<RNNBridgeManagerDelegate>)delegate {
 	[[ReactNativeNavigation sharedInstance] bootstrap:jsCodeLocation launchOptions:launchOptions bridgeManagerDelegate:delegate];
 }
+    
++(void)bootstrapBrownField:(NSURL *)jsCodeLocation launchOptions:(NSDictionary *)launchOptions bridgeManagerDelegate:(id<RNNBridgeManagerDelegate>)delegate window:(UIWindow *)mainWindow {
+    [[ReactNativeNavigation sharedInstance] bootstrapBrownField:jsCodeLocation launchOptions:launchOptions bridgeManagerDelegate:delegate window:mainWindow];
+}
 
 + (void)registerExternalComponent:(NSString *)name callback:(RNNExternalViewCreator)callback {
 	[[ReactNativeNavigation sharedInstance].bridgeManager registerExternalComponent:name callback:callback];
@@ -59,6 +63,10 @@
 	
 	self.bridgeManager = [[RNNBridgeManager alloc] initWithJsCodeLocation:jsCodeLocation launchOptions:launchOptions bridgeManagerDelegate:delegate mainWindow:mainWindow];
 	[RNNSplashScreen showOnWindow:mainWindow];
+}
+    
+-(void)bootstrapBrownField:(NSURL *)jsCodeLocation launchOptions:(NSDictionary *)launchOptions bridgeManagerDelegate:(id<RNNBridgeManagerDelegate>)delegate window:(UIWindow *)mainWindow {
+    self.bridgeManager = [[RNNBridgeManager alloc] initWithJsCodeLocation:jsCodeLocation launchOptions:launchOptions bridgeManagerDelegate:delegate mainWindow:mainWindow];
 }
 
 - (UIWindow *)initializeKeyWindow {
