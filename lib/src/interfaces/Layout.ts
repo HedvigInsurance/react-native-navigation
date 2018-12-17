@@ -24,6 +24,7 @@ export interface LayoutStackChildren {
    * Set component
    */
   component?: LayoutComponent;
+  externalComponent?: {name: string}
 }
 
 export interface LayoutStack {
