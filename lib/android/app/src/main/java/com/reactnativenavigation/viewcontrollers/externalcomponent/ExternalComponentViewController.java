@@ -16,12 +16,16 @@ public class ExternalComponentViewController extends ViewController<ExternalComp
     private final ExternalComponent externalComponent;
     private final ExternalComponentCreator componentCreator;
     private ReactInstanceManager reactInstanceManager;
+    private String componentId;
+    private String name;
 
-    public ExternalComponentViewController(Activity activity, String id, ExternalComponent externalComponent, ExternalComponentCreator componentCreator, ReactInstanceManager reactInstanceManager, Options initialOptions) {
+    public ExternalComponentViewController(Activity activity, String id, ExternalComponent externalComponent, ExternalComponentCreator componentCreator, ReactInstanceManager reactInstanceManager, Options initialOptions, String name) {
         super(activity, id, new NoOpYellowBoxDelegate(), initialOptions);
         this.externalComponent = externalComponent;
         this.componentCreator = componentCreator;
         this.reactInstanceManager = reactInstanceManager;
+        this.componentId = id;
+        this.name = name;
     }
 
     @Override
@@ -37,6 +41,13 @@ public class ExternalComponentViewController extends ViewController<ExternalComp
         if (currentReactContext != null) {
             new EventEmitter(currentReactContext).emitOnNavigationButtonPressed(getId(), buttonId);
         }
+    }
+
+    @Override
+    public void onViewAppeared() {
+        super.onViewAppeared();
+        ReactContext currentReactContext = reactInstanceManager.getCurrentReactContext();
+        new EventEmitter(currentReactContext).componentDidAppear(componentId, name);
     }
 
     public FragmentActivity getActivity() {

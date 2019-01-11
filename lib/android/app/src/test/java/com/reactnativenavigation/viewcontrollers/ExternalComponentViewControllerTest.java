@@ -40,7 +40,7 @@ public class ExternalComponentViewControllerTest extends BaseTest {
                 ec,
                 componentCreator,
                 reactInstanceManager,
-                new Options())
+                new Options(), "")
         );
     }
 
