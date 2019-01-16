@@ -82,7 +82,7 @@ public class StackPresenterTest extends BaseTest {
                 return spy(super.create(activity, componentId, componentName));
             }
         };
-        uut = spy(new StackPresenter(activity, titleViewCreator, new TopBarButtonCreatorMock(), ImageLoaderMock.mock(), new Options()));
+        uut = spy(new StackPresenter(activity, titleViewCreator, new TopBarButtonCreatorMock(), ImageLoaderMock.mock(), new Options(), externalComponentCreators));
         topBar = mockTopBar();
         uut.bindView(topBar);
         uut.setButtonOnClickListener(onClickListener);

@@ -9,9 +9,11 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewGroup.MarginLayoutParams;
+import android.widget.FrameLayout;
 
 import com.reactnativenavigation.parse.Alignment;
 import com.reactnativenavigation.parse.AnimationsOptions;
+import com.reactnativenavigation.parse.ExternalComponent;
 import com.reactnativenavigation.parse.Options;
 import com.reactnativenavigation.parse.OrientationOptions;
 import com.reactnativenavigation.parse.TopBarButtons;
@@ -28,6 +30,8 @@ import com.reactnativenavigation.viewcontrollers.ReactViewCreator;
 import com.reactnativenavigation.viewcontrollers.TitleBarButtonController;
 import com.reactnativenavigation.viewcontrollers.TitleBarReactViewController;
 import com.reactnativenavigation.viewcontrollers.button.NavigationIconResolver;
+import com.reactnativenavigation.viewcontrollers.externalcomponent.ExternalComponentCreator;
+import com.reactnativenavigation.viewcontrollers.externalcomponent.ExternalComponentViewController;
 import com.reactnativenavigation.views.Component;
 import com.reactnativenavigation.views.titlebar.TitleBarReactViewCreator;
 import com.reactnativenavigation.views.topbar.TopBar;
@@ -51,6 +55,7 @@ public class StackPresenter {
     private final double defaultTitleFontSize;
     private final double defaultSubtitleFontSize;
     private final Activity activity;
+    private final Map<String, ExternalComponentCreator> externalComponentCreators;
 
     private TopBar topBar;
     private final TitleBarReactViewCreator titleViewCreator;
@@ -59,15 +64,17 @@ public class StackPresenter {
     private final ReactViewCreator buttonCreator;
     private Options defaultOptions;
     private Map<Component, TitleBarReactViewController> titleComponentViewControllers = new HashMap<>();
+    private Map<Component, ExternalComponentViewController> externalTitleComponentViewControllers = new HashMap<>();
     private Map<Component, Map<String, TitleBarButtonController>> componentRightButtons = new HashMap<>();
     private Map<Component, Map<String, TitleBarButtonController>> componentLeftButtons = new HashMap<>();
 
-    public StackPresenter(Activity activity, TitleBarReactViewCreator titleViewCreator, ReactViewCreator buttonCreator, ImageLoader imageLoader, Options defaultOptions) {
+    public StackPresenter(Activity activity, TitleBarReactViewCreator titleViewCreator, ReactViewCreator buttonCreator, ImageLoader imageLoader, Options defaultOptions, Map<String, ExternalComponentCreator> externalComponentCreators) {
         this.activity = activity;
         this.titleViewCreator = titleViewCreator;
         this.buttonCreator = buttonCreator;
         this.imageLoader = imageLoader;
         this.defaultOptions = defaultOptions;
+        this.externalComponentCreators = externalComponentCreators;
         defaultTitleFontSize = UiUtils.dpToSp(activity, 18);
         defaultSubtitleFontSize = UiUtils.dpToSp(activity, 14);
     }
@@ -179,6 +186,23 @@ public class StackPresenter {
                 titleComponentViewControllers.put(component, controller);
                 controller.setComponent(options.title.component);
                 controller.getView().setLayoutParams(getComponentLayoutParams(options.title.component));
+                topBar.setTitleComponent(controller.getView());
+            }
+        } else if (options.title.externalComponent.hasValue()) {
+            if (externalTitleComponentViewControllers.containsKey(component)) {
+                topBar.setTitleComponent(externalTitleComponentViewControllers.get(component).getView());
+            } else {
+                ExternalComponent externalComponent = options.title.externalComponent;
+                ExternalComponentViewController controller = new ExternalComponentViewController(
+                        activity,
+                        "",
+                        externalComponent,
+                        externalComponentCreators.get(externalComponent.name.toString()),
+                        null,
+                        defaultOptions,
+                        externalComponent.name.toString()
+                );
+                externalTitleComponentViewControllers.put(component, controller);
                 topBar.setTitleComponent(controller.getView());
             }
         }

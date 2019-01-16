@@ -54,4 +54,8 @@ public class ExternalComponent {
             passProps = defaultOptions.passProps;
         }
     }
+
+    public boolean hasValue() {
+        return name.hasValue();
+    }
 }

@@ -34,7 +34,7 @@ public class TestUtils {
                         return topBar;
                     }
                 })
-                .setStackPresenter(new StackPresenter(activity, new TitleBarReactViewCreatorMock(), new TopBarButtonCreatorMock(), new ImageLoader(), new Options())                )
+                .setStackPresenter(new StackPresenter(activity, new TitleBarReactViewCreatorMock(), new TopBarButtonCreatorMock(), new ImageLoader(), new Options(), externalComponentCreators)                )
                 .setInitialOptions(new Options());
     }
 

@@ -46,8 +46,10 @@ public class ExternalComponentViewController extends ViewController<ExternalComp
     @Override
     public void onViewAppeared() {
         super.onViewAppeared();
-        ReactContext currentReactContext = reactInstanceManager.getCurrentReactContext();
-        new EventEmitter(currentReactContext).componentDidAppear(componentId, name);
+        if (reactInstanceManager != null) {
+            ReactContext currentReactContext = reactInstanceManager.getCurrentReactContext();
+            new EventEmitter(currentReactContext).componentDidAppear(componentId, name);
+        }
     }
 
     public FragmentActivity getActivity() {

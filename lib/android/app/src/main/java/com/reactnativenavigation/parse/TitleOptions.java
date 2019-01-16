@@ -25,6 +25,7 @@ public class TitleOptions {
         if (json == null) return options;
 
         options.component = Component.parse(json.optJSONObject("component"));
+        options.externalComponent = ExternalComponent.parse(json.optJSONObject("externalComponent"));
         options.text = TextParser.parse(json, "text");
         options.color = ColorParser.parse(json, "color");
         options.fontSize = FractionParser.parse(json, "fontSize");
@@ -40,6 +41,7 @@ public class TitleOptions {
     public Alignment alignment = Alignment.Default;
     @Nullable public Typeface fontFamily;
     public Component component = new Component();
+    public ExternalComponent externalComponent = new ExternalComponent();
     public Number height = new NullNumber();
 
     void mergeWith(final TitleOptions other) {
@@ -50,6 +52,7 @@ public class TitleOptions {
         if (other.alignment != Alignment.Default) alignment = other.alignment;
         if (other.component.hasValue()) component = other.component;
         if (other.height.hasValue()) height = other.height;
+        if (other.externalComponent.hasValue()) externalComponent = other.externalComponent;
     }
 
     void mergeWithDefault(TitleOptions defaultOptions) {

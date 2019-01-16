@@ -72,6 +72,18 @@ public class TitleBar extends Toolbar {
     }
 
     public void setTitleAlignment(Alignment alignment) {
+        if (this.component != null) {
+            component.post(() -> {
+                if (alignment == Alignment.Center) {
+                    component.setX((getWidth() - component.getWidth()) / 2);
+                } else if (leftButtonController != null) {
+                    component.setX(getContentInsetStartWithNavigation());
+                } else {
+                    component.setX(UiUtils.dpToPx(getContext(), DEFAULT_LEFT_MARGIN));
+                }
+            });
+            return;
+        }
         TextView title = findTitleTextView();
         if (title == null) return;
         alignTextView(alignment, title);
