@@ -29,6 +29,7 @@ public class TitleBar extends Toolbar {
 
     private TitleBarButtonController leftButtonController;
     private View component;
+    private Alignment lastTitleBarAlignment = null;
 
     public TitleBar(Context context) {
         super(context);
@@ -183,6 +184,9 @@ public class TitleBar extends Toolbar {
     private void setLeftButton(TitleBarButtonController button) {
         leftButtonController = button;
         button.applyNavigationIcon(this);
+        if (lastTitleBarAlignment != null) {
+            setTitleAlignment(lastTitleBarAlignment);
+        }
     }
 
     public void setRightButtons(List<TitleBarButtonController> rightButtons) {
