@@ -196,6 +196,12 @@ public class TitleBar extends Toolbar {
         for (int i = 0; i < rightButtons.size(); i++) {
             rightButtons.get(i).addToMenu(this, rightButtons.size() - i - 1);
         }
+        if (lastTitleBarAlignment != null) {
+            setTitleAlignment(lastTitleBarAlignment);
+        }
+        if (lastTitleBarAlignment != null) {
+            setTitleAlignment(lastTitleBarAlignment);
+        }
     }
 
     public void setHeight(int height) {
