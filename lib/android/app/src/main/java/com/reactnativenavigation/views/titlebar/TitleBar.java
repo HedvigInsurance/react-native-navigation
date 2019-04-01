@@ -76,6 +76,9 @@ public class TitleBar extends Toolbar {
         lastTitleBarAlignment = alignment;
         if (this.component != null) {
             component.post(() -> {
+                if (component == null) {
+                    return;
+                }
                 if (alignment == Alignment.Center) {
                     component.setX((getWidth() - component.getWidth()) / 2);
                 } else if (leftButtonController != null) {
