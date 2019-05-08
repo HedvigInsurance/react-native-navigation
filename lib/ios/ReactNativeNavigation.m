@@ -4,6 +4,7 @@
 
 #import "RNNBridgeManager.h"
 #import "RNNSplashScreen.h"
+#import "RNNLayoutManager.h"
 
 @interface ReactNativeNavigation()
 
@@ -36,8 +37,7 @@
 }
 
 + (UIViewController *)findViewController:(NSString *)componentId {
-    RNNStore *store = [[ReactNativeNavigation sharedInstance].bridgeManager store];
-    return [store findComponentForId:componentId];
+    return [RNNLayoutManager findComponentForId:componentId];
 }
 
 # pragma mark - instance

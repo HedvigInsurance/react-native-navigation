@@ -14,9 +14,55 @@ The following options can be used to customise buttons.
   disableIconTint: false,
   color: 'red',
   disabledColor: 'black',
-  testID: 'buttonOneTestID'
+  testID: 'buttonOneTestID',
+  // Android only
+  showAsAction: 'ifRoom', // See below for details.
+  // iOS only
+  systemItem: 'done', // Sets a system bar button item as the icon. Matches UIBarButtonSystemItem naming. See below for details.
 }
 ```
+
+## iOS System Items
+On iOS, UIKit supplies some common bar button glyphs for developers to use. The following values can be supplied as values to to `systemItem` to use them as an icon for your button.
+
+* `done`
+* `cancel`
+* `edit`
+* `save`
+* `add`
+* `flexibleSpace`
+* `fixedSpace`
+* `compose`
+* `reply`
+* `action`
+* `organize`
+* `bookmarks`
+* `search`
+* `refresh`
+* `stop`
+* `camera`
+* `trash`
+* `play`
+* `pause`
+* `rewind`
+* `fastForward`
+* `undo`
+* `redo`
+
+More information about these glyphs can be found in [Apple's Human Interface Guidelines](https://developer.apple.com/ios/human-interface-guidelines/icons-and-images/system-icons/).
+
+
+## Android showAsAction
+
+It is keyword witch configure when and how this item should appear as an action item in the app bar. 
+A menu item can appear as an action item only when the activity includes an app bar.
+
+* `always`
+* `ifRoom`
+* `never`
+* `withText`
+
+[More info about `showAsAction` values](https://developer.android.com/guide/topics/resources/menu-resource)
 
 # Declaring Buttons statically
 
@@ -99,6 +145,7 @@ class MyScreen extends Component {
 As buttons are part of a screen's options, they can be modified like any other styling option using the `mergeOptions` command.
 
 ## Setting buttons
+
 The following command will set the screen's right buttons. If the screen already has Right Buttons declared - they will be overridden.
 
 ```js
@@ -115,6 +162,7 @@ Navigation.mergeOptions(this.props.componentId, {
 ```
 
 ## Removing buttons
+
 Buttons can be removed by setting zero buttons, as shown in the snippet below.
 
 ```js

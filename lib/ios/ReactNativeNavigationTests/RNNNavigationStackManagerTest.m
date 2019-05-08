@@ -1,5 +1,4 @@
 #import <XCTest/XCTest.h>
-#import "RNNStore.h"
 #import "RNNNavigationStackManager.h"
 #import "RNNRootViewController.h"
 #import "RNNNavigationController.h"
@@ -65,7 +64,7 @@
 
 - (void)testStackRoot_shouldUpdateNavigationControllerChildrenViewControllers {
 	XCTestExpectation *expectation = [self expectationWithDescription:@"Testing Async Method"];
-	[_stackManager setStackRoot:self.vc2 fromViewController:self.vc1 animated:NO completion:^{
+	[_stackManager setStackChildren:@[self.vc2] fromViewController:self.vc1 animated:NO completion:^{
 		XCTAssertTrue(self.nvc.childViewControllers.count == 1);
 		XCTAssertTrue([self.nvc.topViewController isEqual:self.vc2]);
 		[expectation fulfill];

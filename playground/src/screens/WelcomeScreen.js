@@ -8,7 +8,7 @@ const Button = require('./Button');
 const { Navigation } = require('react-native-navigation');
 
 class WelcomeScreen extends Component {
-  static get options() {
+  static options() {
     return {
       _statusBar: {
         backgroundColor: 'transparent',
@@ -41,6 +41,7 @@ class WelcomeScreen extends Component {
           <Button title='Push Lifecycle Screen' testID={testIDs.PUSH_LIFECYCLE_BUTTON} onPress={this.onClickLifecycleScreen} />
           <Button title='Static Lifecycle Events' testID={testIDs.PUSH_STATIC_LIFECYCLE_BUTTON} onPress={this.onClickShowStaticLifecycleOverlay} />
           <Button title='Push' testID={testIDs.PUSH_BUTTON} onPress={this.onClickPush} />
+          {false && <Button title='Push Context Screen' testID={testIDs.PUSH_CONTEXT_SCREEN_BUTTON} onPress={this.onClickPushContextScreen} />}
           {Platform.OS === 'ios' && <Button testID={testIDs.SHOW_PREVIEW_BUTTON} onPress={this.onClickPush} onPressIn={this.onClickShowPreview} title='Push Preview' />}
           <Button title='Push Options Screen' testID={testIDs.PUSH_OPTIONS_BUTTON} onPress={this.onClickPushOptionsScreen} />
           <Button title='Push External Component' testID={testIDs.PUSH_EXTERNAL_COMPONENT_BUTTON} onPress={this.onClickPushExternalComponent} />
@@ -86,8 +87,7 @@ class WelcomeScreen extends Component {
                         },
                         bottomTab: {
                           text: 'Tab 1',
-                          icon: require('../images/one.png'),
-                          selectedIcon: require('../images/one.png'),
+                          icon: require('../images/colored_tab_icon.png'),
                           testID: testIDs.FIRST_TAB_BAR_BUTTON
                         }
                       }
@@ -117,6 +117,8 @@ class WelcomeScreen extends Component {
                   bottomTab: {
                     text: 'Tab 2',
                     icon: require('../images/two.png'),
+                    iconColor: '#1B4C77',
+                    selectedIconColor: '#0f0',
                     testID: testIDs.SECOND_TAB_BAR_BUTTON
                   }
                 }
@@ -137,6 +139,8 @@ class WelcomeScreen extends Component {
                   bottomTab: {
                     text: 'Tab 3',
                     icon: require('../images/one.png'),
+                    iconColor: '#1B4C77',
+                    selectedIconColor: '#0f0',
                     selectedIcon: require('../images/one.png')
                   }
                 }
@@ -276,6 +280,9 @@ class WelcomeScreen extends Component {
       component: {
         name: 'navigation.playground.PushedScreen',
         options: {
+          layout: {
+            
+          },
           topBar: {
             title: {
               text: 'pushed',
@@ -291,6 +298,14 @@ class WelcomeScreen extends Component {
         }
       }
     });
+  }
+
+  onClickPushContextScreen = async () => {
+    await Navigation.push(this.props.componentId, {
+      component: {
+        name: 'navigation.playground.ContextScreen',
+      }
+    })
   }
 
   onClickPushExternalComponent = async () => {
@@ -574,12 +589,10 @@ const styles = {
     flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#e8e8e8',
   },
   bar: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#e8e8e8',
     justifyContent: 'space-between'
   },
   h1: {
